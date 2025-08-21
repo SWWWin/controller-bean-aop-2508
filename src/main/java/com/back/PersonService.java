@@ -1,10 +1,14 @@
 package com.back;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
 public class PersonService {
 
-    private int i = 0;
-
+    private final PersonRepository personRepositoryV2;
     public long count() {
-        return i ++;
+        return personRepositoryV2.count();
     }
 }

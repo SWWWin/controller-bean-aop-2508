@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
+    @Bean
+    PersonRepository personRepository() {
+        return new PersonRepository(1);
+    }
 
     @Bean
-    PersonService personService() {
-        System.out.println("PersonService 빈 등록");
-        return new PersonService();
+    PersonRepository personRepositoryV2() {
+        return new PersonRepository(2);
     }
 }
