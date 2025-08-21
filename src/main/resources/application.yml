@@ -1,0 +1,4 @@
+spring:
+  application:
+    name: controller-bean-aop-2508
+
