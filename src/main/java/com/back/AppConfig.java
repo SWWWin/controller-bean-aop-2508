@@ -1,0 +1,15 @@
+package com.back;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+
+
+    @Bean
+    PersonService personService() {
+        System.out.println("PersonService 빈 등록");
+        return new PersonService();
+    }
+}
