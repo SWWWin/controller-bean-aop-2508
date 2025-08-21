@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class PersonService {
+    private final PersonRepository personRepository;
 
-    private final PersonRepository personRepositoryV2;
     public long count() {
-        return personRepositoryV2.count();
+        return personRepository.count();
     }
 }
