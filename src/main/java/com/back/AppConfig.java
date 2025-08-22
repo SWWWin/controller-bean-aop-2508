@@ -1,6 +1,5 @@
 package com.back;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +10,14 @@ import org.springframework.context.annotation.Lazy;
 @Configuration
 public class AppConfig {
 
-    @Autowired
-    @Lazy // 레이지 모델을 쓰면 프록시 패턴을 사용학 ㅣ떄
-    private AppConfig self;
+    //@Autowired
+    //@Lazy // 레이지 모델을 쓰면 프록시 패턴을 사용학 ㅣ떄
+    private final AppConfig self;
 
+
+    public AppConfig(@Lazy AppConfig appConfig) {
+        this.self = appConfig;
+    }
     @Bean
     PersonRepository personRepository() {
         return new PersonRepository(1);
