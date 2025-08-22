@@ -1,56 +1,50 @@
 package com.back;
 
-import org.springframework.boot.ApplicationArguments;
+import com.back.domain.member.member.entity.Member;
+import com.back.domain.member.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.transaction.annotation.Transactional;
 
-
+@RequiredArgsConstructor
 @Configuration
 public class AppConfig {
 
-    //@Autowired
-    //@Lazy // 레이지 모델을 쓰면 프록시 패턴을 사용학 ㅣ떄
-    private final AppConfig self;
+    private final MemberService memberService;
+
+    @Autowired
+    @Lazy // 레이지 모델을 쓰면 프록시 패턴을 사용학 ㅣ떄
+    private AppConfig self;
 
 
-    public AppConfig(@Lazy AppConfig appConfig) {
-        this.self = appConfig;
-    }
-    @Bean
-    PersonRepository personRepository() {
-        return new PersonRepository(1);
-    }
 
     @Bean
-    int version() {
-        return 3;
-    }
-
-    @Bean
-    public ApplicationRunner myApplicationRunner() {
-        return new ApplicationRunner() {
-            @Override
-            public void run(ApplicationArguments args) throws Exception {
-                System.out.println("myApplicationRunner is running");
-            }
-        };
-    }
-
-    @Bean
-    public ApplicationRunner myApplicationRunner2() {
+    public ApplicationRunner baseInitDataApplicationRunner() {
         return args -> {
-            work1();
-            work2();
+            self.work1();
+            self.work2();
         };
     }
 
-    private void work2() {
-        System.out.println("work2");
+    @Transactional
+    void work2() {
+        Member memberUser2 = memberService.findByUsername("user2").get();
+
+        memberUser2.setNickname("유저2 New Nickname");
     }
 
-    private void work1() {
-        System.out.println("work1");
+    @Transactional
+    void work1() {
+        if (memberService.count() > 0) return;
+
+        Member memberSystem = memberService.join("system", "1234", "시스템");
+        Member memberAdmin = memberService.join("admin", "1234", "관리자");
+        Member memberUser1 = memberService.join("user1", "1234", "유저1");
+        Member memberUser2 = memberService.join("user2", "1234", "유저2");
+        Member memberUser3 = memberService.join("user3", "1234", "유저3");
     }
 }

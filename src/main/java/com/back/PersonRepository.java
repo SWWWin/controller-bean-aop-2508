@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class PersonRepository {
-    private final int version;
+
     private long i;
 
     public long count() {
-        System.out.println("PersonRepository(v%d).count() 작동".formatted(version));
+        System.out.println("PersonRepository(v%d).count() 작동".formatted(i));
         return i ++;
     }
 }
