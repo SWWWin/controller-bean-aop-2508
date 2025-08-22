@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequiredArgsConstructor
 @Controller
+
 public class PersonController {
     private final PersonService personService;
 
